@@ -24,3 +24,6 @@ Adaptador Web (usa Puerto de entrada para conectarse con) -> usecase (usa Puerto
 Fuente:
 https://medium.com/@demisgomes/rumo-ao-hexa-a-arquitetura-hexagonal-parte-1-161a000c0a0
 https://medium.com/@demisgomes/rumo-ao-hexa-a-arquitetura-hexagonal-parte-2-1298b6a5e3a5
+
+
+Proyecto “library”. It seems to be pretty simple — it’s a management system for handling books & users in a local library
