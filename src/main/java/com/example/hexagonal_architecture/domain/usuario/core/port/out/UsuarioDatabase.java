@@ -1,0 +1,8 @@
+package com.example.hexagonal_architecture.domain.usuario.core.port.out;
+
+import com.example.hexagonal_architecture.domain.usuario.core.model.Usuario;
+
+public interface UsuarioDatabase {
+    Usuario save(Usuario usuario);
+    Usuario findById(Long id);
+}
