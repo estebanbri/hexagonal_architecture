@@ -1,6 +1,6 @@
-package com.example.hexagonal_architecture.domain.data;
+package com.example.hexagonal_architecture.domain.model;
 
-public class AlumnoDTO {
+public class Alumno {
 
     private String nombre;
     private String apellido;

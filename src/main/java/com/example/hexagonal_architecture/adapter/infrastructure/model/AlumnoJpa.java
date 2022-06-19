@@ -1,11 +1,11 @@
-package com.example.hexagonal_architecture.persistence_jpa.model;
+package com.example.hexagonal_architecture.adapter.infrastructure.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class Alumno {
+public class AlumnoJpa {
 
     @Id
     @Column(name = "ID")
