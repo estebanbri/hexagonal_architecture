@@ -1,5 +1,6 @@
 package com.example.hexagonal_architecture.domain.usuario.core.model;
 
+// Value Object
 public class Usuario {
 
     private String nombre;

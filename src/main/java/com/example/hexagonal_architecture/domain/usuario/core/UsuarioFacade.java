@@ -14,7 +14,7 @@ public class UsuarioFacade // adapter del puerto de entrada
     }
 
     @Override
-    public Usuario handle(Usuario usuario) {
+    public Long handle(Usuario usuario) {
         return usuarioDatabase.save(usuario);
     }
 

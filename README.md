@@ -1,4 +1,5 @@
 # Arquitectura Hexagonal
+
 <img src="https://github.com/estebanbri/hexagonal_architecture/blob/master/arquitectura-diagrama.png" alt="diag1" width="900"/>
 Como ves en el siguiente imagen del diagrama de arquitectura hexagonal, vas
 a ver que tiene fechas con puntas blancas y negras.
@@ -10,7 +11,7 @@ Adaptador Web (usa Puerto de entrada para conectarse con) -> facade (usa Puerto 
 
 Fuente:
 https://wkrzywiec.medium.com/ports-adapters-architecture-on-example-19cab9e93be7
-
+https://www.youtube.com/watch?v=tMHO7_RLxgQ
 ___
 
 Suponiendo que tenes el siguiente proyecto:
@@ -19,6 +20,11 @@ Suponiendo que tenes el siguiente proyecto:
 
 Un domain puede ser descripto como una pequeña parte de una aplicación, pero la division esta hecha
 basada en contexto de negocio.
+
+El domain aplica el principio INVERSION DE CONTROL (CONTROL INVERSION), es decir el domain no depende de nada de los exterior
+el exterior es el que va a depender del domain. Es decir el domain va a encargarse de definir interfaces y el exterior al domain
+va a tener que darle implementacion. Es decir el exterior va a depender del las interfaces del domain.
+
 
 Leyendo la descripcion del proyecto te da una pista que tu aplicación va a tener mas de un domain y
 cada doamin va a ser responsable de una parte diferente de la logica de negocio, es decir: 
@@ -86,3 +92,28 @@ Asi como tenemos puertos de entrada y salida, tenemos adaptadores de entrada (ej
 (Ojo: lo que definis en application ya sea un restcontroller, @Schedule o lo que sea para llamar a la logica de negocio del core NO SON ADAPTERS DE ENTRADA fijate que no implementan el puerto de entrada
 solo lo usan directamente por composicion)
 Los adapter definen el Como? se va a ser la implementacion de las interfaces/contratos dados por los puertos del core.
+
+Temas importantes:
+### STRICT DTO's versus ABUSE DTO's?
+Spoiler: Es mejor que cada dto sea especifico (STRICT DTO) a una casuistica en especifica es decir,
+tener un unico DTO que sirve para todo es decir crear, actualizar, borrar una entidad se llama DTO ABUSE (Abuso de dto).
+Por ej el dto de request para crear un usuario no tiene sentido tener el field createdDate ya que va a llegar null al backend.
+Ventaja de tener STRICT's DTO's: Pensando a lo grande imaginate que tenes un dto con 50 fields y para el update solo usas 5 de esos vas a llegar al backend con 45 field en null
+y vas a tener que ver la logica para ver cuales fields es correcto que esten en null y cuales son especificos de la casuistica que no pueden llegar null
+En resumen: Crear STRICT DTO's (dichos dto no pueden tener useless fields que no use dependiendo contexto de su uso).
+
+### Value Objects versus Entities versus DTO's donde los ubico a cada uno?
+Cada uno de ellos tienen un modulo distinto. Es decir por ej nunca vas a poner dto dentro de tu domain core porque un dto es algo del cliente quien hace el request.
+Es decir en resumen vas a tener los siguientes modelos en cada capa:
+-- application: dto
+-- core: value object
+-- infrastructure: entity (database) o dto (external services)
+
+### Value Objects (STRUCTURAL EQUALITY) versus Entity (IDENTIFIER EQUALITY)
+Como notaste lo objetos model que tenes dentro del domain core son Value Objects porque no tienen field id.
+En resumen la diferencia radica en que las entidades tienen IDENTIFIER EQUALITY (es decir un id que los identifica a cada una)
+versus los value objects tienen STRUCTURAL EQUALITY.
+Ejemplo: 
+__Entidad__=> La entidad Usuario { id: 1, name: "Object"} es igual a entidad { id: 1, name: "Obj"} porque tienen mismo id. Es decir la identidad esta dada por el campo id unicamente, indistintamente que tengan diferntes valores de los otros fields.
+__Value Object__=> El Value Object  { calle: Brown123, pais: "Argentina"} es igual al objeto { calle: Brown123, pais: "Argentina"} porque tienen los mismos valores identicos de cada field. Es decir la identidad esta dada por la sumatoria de field y no por un campo en especifico
+Fuente: https://enterprisecraftsmanship.com/posts/entity-vs-value-object-the-ultimate-list-of-differences/#:~:text=The%20main%20difference%20between%20entities,while%20value%20objects%20don't.

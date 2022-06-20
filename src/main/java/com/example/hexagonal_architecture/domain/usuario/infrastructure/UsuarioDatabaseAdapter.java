@@ -22,8 +22,9 @@ public class UsuarioDatabaseAdapter  // adaptador de salida
     }
 
     @Override
-    public Usuario save(Usuario usuario) {
-        return toUsuario(usuarioRepository.save(toUsuarioJpa(usuario)));
+    public long save(Usuario usuario) {
+        UsuarioJpa usuarioJpa = usuarioRepository.save(toUsuarioJpa(usuario));
+        return usuarioJpa.getId();
     }
 
     @Override
