@@ -103,11 +103,12 @@ y vas a tener que ver la logica para ver cuales fields es correcto que esten en 
 En resumen: Crear STRICT DTO's (dichos dto no pueden tener useless fields que no use dependiendo contexto de su uso).
 
 ### Value Objects versus Entities versus DTO's donde los ubico a cada uno?
+Importante!: Los adaptadores son los responsables de convertir (mappear) tu/s objectos(s) de domain core al objeto que manejen dichos adapters. O sea el domain jamas es responsable de tener logica de conversion/mapper, el domain lo unico que dice es: este o estos son mis objetos de domain core, ustedes arreglensela a las demas capas ustedes (adapter de entrada u adapter de salida) van a ser los responsables de convertir mi domain object a lo  que ustedes necesiten.
 Cada uno de ellos tienen un modulo distinto. Es decir por ej nunca vas a poner dto dentro de tu domain core porque un dto es algo del cliente quien hace el request.
 Es decir en resumen vas a tener los siguientes modelos en cada capa:
 -- application: dto
--- core: value object
--- infrastructure: entity (database) o dto (external services)
+-- core: value object / entity (sin framework)
+-- infrastructure: entity (con framework ej: jpa) o dto (external services)
 
 ### Value Objects (STRUCTURAL EQUALITY) versus Entity (IDENTIFIER EQUALITY)
 Como notaste lo objetos model que tenes dentro del domain core son Value Objects porque no tienen field id.
